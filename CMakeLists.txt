@@ -13,16 +13,19 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        src/main.cpp
+        src/mainwindow.cpp
+        src/mainwindow.h
+        ui/mainwindow.ui
 )
+
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QJab
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        src/xmppworker.h src/xmppworker.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET QJab APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -45,17 +48,18 @@ endif()
 set(QXmpp_VERSION 1.8.0) # Version de la librería usada
 
 # Busca la librería en el directorio "external" si existe en el proyecto
-if(EXISTS external)
-    set(QXmpp_BUILD_DIR external/qxmpp-1.8.0/build)
-    # Asume que la librería se compiló e instaló en "QXmpp_BUILD_DIR"
-    find_package(QXmpp ${QXmpp_VERSION} REQUIRED NAMES QXmpp QXmppQt6 PATHS ${QXmpp_BUILD_DIR}/lib/cmake/QXmppQt6 NO_DEFAULT_PATH)
+set(EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
+if(EXISTS ${EXTERNAL_DIR})
+    # Agrega QXmpp de la carpeta "external"
+    set(QXmpp_DIR ${EXTERNAL_DIR}/qxmpp-${QXmpp_VERSION}/build/lib/cmake/QXmppQt6)
+    set(QXmpp_INCLUDE ${EXTERNAL_DIR}/qxmpp-${QXmpp_VERSION}/build/include/QXmppQt6)
 endif()
 
 find_package(QXmpp ${QXmpp_VERSION} REQUIRED NAMES QXmpp QXmppQt6)
 
 target_link_libraries(QJab PRIVATE Qt${QT_VERSION_MAJOR}::Widgets QXmpp::QXmpp)
-if(DEFINED QXmpp_BUILD_DIR)
-    target_include_directories(QJab PRIVATE ${QXmpp_BUILD_DIR}/include/QXmppQt6)
+if(DEFINED ${QXmpp_INCLUDE})
+    target_include_directories(QJab PRIVATE ${QXmpp_INCLUDE})
 endif()
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
