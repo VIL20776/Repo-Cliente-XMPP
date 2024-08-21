@@ -32,9 +32,10 @@ public:
     ~MainWindow();
 
 public slots:
-    void onMessageReceived(const QString &message);
+    void onMessageReceived(const QString &from, const QString &message);
     void onRosterReceived(const QStringList &barejids);
     void onPresenceChanged(const QString &barejid, const QString &presence);
+    void onContactList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 signals:
     void startXMPPClient();

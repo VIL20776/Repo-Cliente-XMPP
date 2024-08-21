@@ -7,6 +7,9 @@
 
 #include <QDebug>
 
+QMap<QString, QStringList> chat_register;
+QString currentChat;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -18,9 +21,12 @@ MainWindow::MainWindow(QWidget *parent)
     worker->moveToThread(client_thread);
 
     connect(this, &MainWindow::startXMPPClient, worker, &XMPPWorker::connectToServer);
+
     connect(worker, &XMPPWorker::messageReceived, this, &MainWindow::onMessageReceived);
     connect(worker, &XMPPWorker::rosterReceived, this, &MainWindow::onRosterReceived);
     connect(worker, &XMPPWorker::presenceChanged, this, &MainWindow::onPresenceChanged);
+
+    connect(ui->contact_list, &QListWidget::currentItemChanged, this, &MainWindow::onContactList_currentItemChanged);
 
     connect(client_thread, &QThread::finished, worker, &XMPPWorker::deleteLater);
     connect(client_thread, &QThread::finished, client_thread, &QThread::deleteLater);
@@ -38,8 +44,11 @@ MainWindow::~MainWindow()
     }
 }
 
-void MainWindow::onMessageReceived(const QString &message) {
-    ui->message_list->addItem(message);
+void MainWindow::onMessageReceived(const QString &from, const QString &message) {
+    chat_register[from].append(message);
+
+    if (currentChat == from)
+        ui->message_list->addItem(message);
 }
 
 void MainWindow::onRosterReceived(const QStringList &barejids) {
@@ -54,4 +63,16 @@ void MainWindow::onRosterReceived(const QStringList &barejids) {
 void MainWindow::onPresenceChanged(const QString &barejid, const QString &presence) {
     if (contact_map.contains(barejid))
         contact_map[barejid]->setText(barejid + "\n" + presence);
+}
+
+void MainWindow::onContactList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
+    currentChat = current->text().split(u'\n').at(0);
+    ui->chat_label->setText("JID: " + currentChat);
+
+    // remove items
+    for (int i = 0; i < ui->message_list->count(); i++) 
+        delete ui->message_list->takeItem(i);
+
+    ui->message_list->addItems(chat_register[currentChat]);
+    
 }
