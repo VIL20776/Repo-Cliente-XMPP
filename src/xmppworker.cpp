@@ -34,7 +34,7 @@ void XMPPWorker::handleMessageReceived(const QXmppMessage &message) {
     QString body = message.body();
 
     if (message.type() == QXmppMessage::Chat)
-        emit messageReceived(body);
+        emit messageReceived(from, body);
 }
 
 void XMPPWorker::handlePresenceChanged(const QString &barejid, const QString &resource) {

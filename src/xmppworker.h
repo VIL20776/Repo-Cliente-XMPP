@@ -29,7 +29,7 @@ public slots:
     void handleRosterReceived();
 
 signals:
-    void messageReceived(const QString &message);
+    void messageReceived(const QString &from, const QString &message);
     void rosterReceived(const QStringList &barejids);
     void presenceChanged(const QString &barejid, const QString &presence);
 
