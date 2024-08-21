@@ -5,6 +5,7 @@
 #include "QXmppMessage.h"
 
 #include <QMainWindow>
+#include <QListWidgetItem>
 #include <QThread>
 
 #include "xmppworker.h"
@@ -24,12 +25,16 @@ private:
     XMPPWorker *worker;
     QThread *client_thread;
 
+    QMap<QString, QListWidgetItem*> contact_map;
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 public slots:
     void onMessageReceived(const QString &message);
+    void onRosterReceived(const QStringList &barejids);
+    void onPresenceChanged(const QString &barejid, const QString &presence);
 
 signals:
     void startXMPPClient();
