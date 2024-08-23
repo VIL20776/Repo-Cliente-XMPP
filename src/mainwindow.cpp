@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(worker, &XMPPWorker::presenceChanged, this, &MainWindow::onPresenceChanged);
 
     connect(ui->contact_list, &QListWidget::currentItemChanged, this, &MainWindow::onContactList_currentItemChanged);
+    connect(ui->send, &QPushButton::clicked, this, &MainWindow::onSendButton_clicked);
 
     connect(client_thread, &QThread::finished, worker, &XMPPWorker::deleteLater);
     connect(client_thread, &QThread::finished, client_thread, &QThread::deleteLater);
@@ -75,4 +76,20 @@ void MainWindow::onContactList_currentItemChanged(QListWidgetItem *current, QLis
 
     ui->message_list->addItems(chat_register[currentChat]);
     
+}
+
+void MainWindow::onSendButton_clicked() {
+
+    QString message = ui->msg_input->text();
+    if (message == "")
+        return;
+
+    auto my_message = new QListWidgetItem();
+    my_message->setText(message);
+    my_message->setTextAlignment(Qt::AlignRight);
+
+    ui->message_list->addItem(my_message);
+    ui->msg_input->setText("");
+    
+    worker->handleSendMessage(message, currentChat);
 }

@@ -28,13 +28,16 @@ void XMPPWorker::connectToServer() {
     client->connectToServer(config);
 }
 
+void XMPPWorker::handleSendMessage(const QString &message, const QString &to) {
+    client->sendPacket(QXmppMessage("", to, message));
+}
 
 void XMPPWorker::handleMessageReceived(const QXmppMessage &message) {
     QString from = message.from();
     QString body = message.body();
 
     if (message.type() == QXmppMessage::Chat)
-        emit messageReceived(from, body);
+        emit messageReceived(from.split(u'/').at(0), body);
 }
 
 void XMPPWorker::handlePresenceChanged(const QString &barejid, const QString &resource) {

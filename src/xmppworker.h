@@ -23,6 +23,8 @@ public:
     XMPPWorker(QObject *parent = nullptr);
     void connectToServer();
 
+    void handleSendMessage(const QString &message, const QString &to);
+
 public slots:
     void handleMessageReceived(const QXmppMessage &message);
     void handlePresenceChanged(const QString &barejid, const QString &resource);
