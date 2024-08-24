@@ -66,6 +66,10 @@ QString XMPPWorker::getPresence(const QString &barejid, const QString &resource)
     return  show + "\n" + status;
 }
 
+QString XMPPWorker::getCurrentJID() {
+    return client->configuration().jidBare();
+}
+
 void XMPPWorker::handleMessageReceived(const QXmppMessage &message) {
     QString from = message.from();
     QString body = message.body();

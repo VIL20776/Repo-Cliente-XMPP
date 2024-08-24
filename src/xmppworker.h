@@ -22,6 +22,7 @@ public:
     void connectToServer();
 
     void handleSendMessage(const QString &message, const QString &to);
+    QString getCurrentJID();
     QString getPresence(const QString &barejid, const QString &resource);
 
 public slots:
