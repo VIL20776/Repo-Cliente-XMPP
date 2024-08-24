@@ -32,17 +32,8 @@ void XMPPWorker::handleSendMessage(const QString &message, const QString &to) {
     client->sendPacket(QXmppMessage("", to, message));
 }
 
-void XMPPWorker::handleMessageReceived(const QXmppMessage &message) {
-    QString from = message.from();
-    QString body = message.body();
-
-    if (message.type() == QXmppMessage::Chat)
-        emit messageReceived(from.split(u'/').at(0), body);
-}
-
-void XMPPWorker::handlePresenceChanged(const QString &barejid, const QString &resource) {
-
-    auto presence = roster_manager->getPresence(barejid, resource);
+QString XMPPWorker::getPresence(const QString &barejid, const QString &resource) {
+    QXmppPresence presence = roster_manager->getPresence(barejid, resource);
 
     QString status = presence.statusText();
 
@@ -72,9 +63,31 @@ void XMPPWorker::handlePresenceChanged(const QString &barejid, const QString &re
         break;
     }
 
+    return  show + "\n" + status;
+}
+
+void XMPPWorker::handleMessageReceived(const QXmppMessage &message) {
+    QString from = message.from();
+    QString body = message.body();
+    
+    if (body == "")
+        return;
+
+    switch (message.type())
+    {
+        case QXmppMessage::Chat:
+            emit messageReceived(from.split(u'/').at(0), body);
+        
+
+    }
+}
+
+void XMPPWorker::handlePresenceChanged(const QString &barejid, const QString &resource) {
+
+    QString presence = getPresence(barejid, resource);
     QString jid = barejid.split(u'/')[0];
 
-    emit presenceChanged(jid, show + "\n" + status);
+    emit presenceChanged(jid, presence);
     
 }
 

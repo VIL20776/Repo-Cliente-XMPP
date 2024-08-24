@@ -16,14 +16,13 @@ class XMPPWorker : public QObject
 private:
     QXmppClient *client;
     QXmppRosterManager *roster_manager;
-    QMap<QString, ContactInfo> contacts;
-    QMap<QString, QStringList> chats;
     
 public:
     XMPPWorker(QObject *parent = nullptr);
     void connectToServer();
 
     void handleSendMessage(const QString &message, const QString &to);
+    QString getPresence(const QString &barejid, const QString &resource);
 
 public slots:
     void handleMessageReceived(const QXmppMessage &message);
