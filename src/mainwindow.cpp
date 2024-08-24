@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(worker, &XMPPWorker::rosterReceived, this, &MainWindow::onRosterReceived);
     connect(worker, &XMPPWorker::presenceChanged, this, &MainWindow::onPresenceChanged);
 
-    connect(ui->contact_list, &QListWidget::currentItemChanged, this, &MainWindow::onContactList_currentItemChanged);
+    connect(ui->chat_list, &QListWidget::currentItemChanged, this, &MainWindow::onChatList_currentItemChanged);
     connect(ui->send, &QPushButton::clicked, this, &MainWindow::onSendButton_clicked);
 
     connect(client_thread, &QThread::finished, worker, &XMPPWorker::deleteLater);
@@ -46,10 +46,17 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::onMessageReceived(const QString &from, const QString &message) {
-    chat_register[from].append(message);
+    if (!chat_register.contains(from)) {
+        chat_register.insert(from, {});
+        ui->chat_list->addItem(from);
+    }
+
+    QString msg = from + ":\n" + message;
+
+    chat_register[from].append(msg);
 
     if (currentChat == from)
-        ui->message_list->addItem(message);
+        ui->message_list->addItem(msg);
 }
 
 void MainWindow::onRosterReceived(const QStringList &barejids) {
@@ -66,15 +73,15 @@ void MainWindow::onPresenceChanged(const QString &barejid, const QString &presen
         contact_map[barejid]->setText(barejid + "\n" + presence);
 }
 
-void MainWindow::onContactList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
+void MainWindow::onChatList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
     currentChat = current->text().split(u'\n').at(0);
-    ui->chat_label->setText("JID: " + currentChat);
+    ui->chat_label->setText(currentChat);
 
     // remove items
-    for (int i = 0; i < ui->message_list->count(); i++) 
-        delete ui->message_list->takeItem(i);
+    while (ui->message_list->count() > 0) 
+        delete ui->message_list->takeItem(0);
 
-    ui->message_list->addItems(chat_register[currentChat]);
+    ui->message_list->addItems(chat_register.value(currentChat));
     
 }
 
@@ -85,8 +92,9 @@ void MainWindow::onSendButton_clicked() {
         return;
 
     auto my_message = new QListWidgetItem();
-    my_message->setText(message);
-    my_message->setTextAlignment(Qt::AlignRight);
+    QString msg = worker->getCurrentJID() + ":\n" + message;
+    chat_register[currentChat].append(msg);
+    my_message->setText(msg);
 
     ui->message_list->addItem(my_message);
     ui->msg_input->setText("");

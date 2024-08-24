@@ -35,7 +35,7 @@ public slots:
     void onMessageReceived(const QString &from, const QString &message);
     void onRosterReceived(const QStringList &barejids);
     void onPresenceChanged(const QString &barejid, const QString &presence);
-    void onContactList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void onChatList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void onSendButton_clicked();
 
 signals:
