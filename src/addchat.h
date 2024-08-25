@@ -26,6 +26,9 @@ class AddChat: public QDialog
     public slots:
     void onStartChat_clicked();
 
+    signals:
+    void newChat(const QString &barejid, const QString &message);
+
 };
 
 #endif // ADDCHAT_H
