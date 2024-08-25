@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "xmppworker.h"
+#include "addcontact.h"
 
 #include "QXmppLogger.h"
 
@@ -28,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->chat_list, &QListWidget::currentItemChanged, this, &MainWindow::onChatList_currentItemChanged);
     connect(ui->send, &QPushButton::clicked, this, &MainWindow::onSendButton_clicked);
+    connect(ui->add_contact, &QPushButton::clicked, this, &MainWindow::onAddContact_clicked);
 
     connect(client_thread, &QThread::finished, worker, &XMPPWorker::deleteLater);
     connect(client_thread, &QThread::finished, client_thread, &QThread::deleteLater);
@@ -83,6 +85,11 @@ void MainWindow::onChatList_currentItemChanged(QListWidgetItem *current, QListWi
 
     ui->message_list->addItems(chat_register.value(currentChat));
     
+}
+
+void MainWindow::onAddContact_clicked() {
+    AddContact add_contact = AddContact(worker, this);
+    add_contact.exec();
 }
 
 void MainWindow::onSendButton_clicked() {
