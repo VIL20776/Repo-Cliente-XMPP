@@ -17,6 +17,8 @@ set(PROJECT_SOURCES
         src/mainwindow.cpp
         src/mainwindow.h
         ui/mainwindow.ui
+        ui/addcontact_dialog.ui
+        ui/addchat_dialog.ui
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
@@ -26,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         src/xmppworker.h src/xmppworker.cpp
+        src/addcontact.h src/addcontact.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET QJab APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
