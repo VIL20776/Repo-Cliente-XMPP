@@ -13,33 +13,33 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="start_chat">
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>200</y>
+     <y>220</y>
      <width>321</width>
      <height>26</height>
     </rect>
    </property>
    <property name="text">
-    <string>Iniciar/Unirse a una convesacion/chat grupal</string>
+    <string>Iniciar/Unirse a una convesacion</string>
    </property>
   </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>100</y>
+     <y>80</y>
      <width>511</width>
-     <height>76</height>
+     <height>108</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Inicia o unete a una conversacion o chat grupal</string>
+       <string>Inicia o unete a una conversacion:</string>
       </property>
      </widget>
     </item>
@@ -51,12 +51,22 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="success">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Mensaje (opcional):</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="message">
       <property name="text">
        <string/>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
+      <property name="placeholderText">
+       <string>Mensaje</string>
       </property>
      </widget>
     </item>
