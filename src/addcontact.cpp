@@ -17,5 +17,8 @@ AddContact::~AddContact()
 }
 
 void AddContact::onSubscribe_clicked() {
+    QString jid = ui->jid_input->text();
+    worker->subscribe(jid);
+
     QDialog::accept();
 }
