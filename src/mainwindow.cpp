@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(worker, &XMPPWorker::messageReceived, this, &MainWindow::onMessageReceived);
     connect(worker, &XMPPWorker::rosterReceived, this, &MainWindow::onRosterReceived);
+    connect(worker, &XMPPWorker::rosterItemAdded, this, &MainWindow::onRosterItemAdded);
     connect(worker, &XMPPWorker::presenceChanged, this, &MainWindow::onPresenceChanged);
 
     connect(ui->chat_list, &QListWidget::currentItemChanged, this, &MainWindow::onChatList_currentItemChanged);
@@ -73,6 +74,10 @@ void MainWindow::onRosterReceived(const QStringList &barejids) {
 void MainWindow::onPresenceChanged(const QString &barejid, const QString &presence) {
     if (contact_map.contains(barejid))
         contact_map[barejid]->setText(barejid + "\n" + presence);
+}
+
+void MainWindow::onRosterItemAdded(const QString &barejid) {
+    ui->contact_list->addItem(barejid);
 }
 
 void MainWindow::onChatList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {

@@ -34,6 +34,7 @@ public:
 public slots:
     void onMessageReceived(const QString &from, const QString &message);
     void onRosterReceived(const QStringList &barejids);
+    void onRosterItemAdded(const QString &barejid);
     void onPresenceChanged(const QString &barejid, const QString &presence);
     void onChatList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void onAddContact_clicked();
