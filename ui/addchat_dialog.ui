@@ -32,7 +32,7 @@
      <x>40</x>
      <y>100</y>
      <width>511</width>
-     <height>52</height>
+     <height>76</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -47,6 +47,16 @@
      <widget class="QLineEdit" name="jid_input">
       <property name="placeholderText">
        <string>JID o Room JID</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="success">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
     </item>
