@@ -10,6 +10,7 @@ XMPPWorker::XMPPWorker(QObject *parent):
     QObject(parent),
     client(new QXmppClient(this))
 {
+    setPresence();
     roster_manager = client->findExtension<QXmppRosterManager>();
 
     connect(client, &QXmppClient::messageReceived, this, &XMPPWorker::handleMessageReceived);
@@ -36,6 +37,18 @@ void XMPPWorker::handleSendMessage(const QString &message, const QString &to) {
 
 void XMPPWorker::subscribe(const QString &to) {
     roster_manager->subscribe(to);
+}
+
+void XMPPWorker::setPresence(const int &type, const QString &status) {
+    using StatusType = QXmppPresence::AvailableStatusType;
+
+    QXmppPresence my_presence = {};
+    my_presence.setAvailableStatusType((StatusType) type);
+    
+    if (status != "")
+        my_presence.setStatusText(status);
+
+    client->setClientPresence(my_presence);
 }
 
 QString XMPPWorker::getPresence(const QString &barejid, const QString &resource) {

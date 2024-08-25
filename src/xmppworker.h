@@ -19,6 +19,7 @@ public:
 
     void handleSendMessage(const QString &message, const QString &to);
     void subscribe(const QString &to);
+    void setPresence(const int &type = 0, const QString &status = "");
     QString getCurrentJID();
     QString getPresence(const QString &barejid, const QString &resource);
 
