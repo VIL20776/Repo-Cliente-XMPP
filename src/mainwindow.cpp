@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->chat_list, &QListWidget::currentItemChanged, this, &MainWindow::onChatList_currentItemChanged);
     connect(ui->send, &QPushButton::clicked, this, &MainWindow::onSendButton_clicked);
     connect(ui->add_contact, &QPushButton::clicked, this, &MainWindow::onAddContact_clicked);
+    connect(ui->add_chat, &QPushButton::clicked, this, &MainWindow::onAddChat_clicked);
+
 
     connect(client_thread, &QThread::finished, worker, &XMPPWorker::deleteLater);
     connect(client_thread, &QThread::finished, client_thread, &QThread::deleteLater);
@@ -80,6 +82,19 @@ void MainWindow::onRosterItemAdded(const QString &barejid) {
     ui->contact_list->addItem(barejid);
 }
 
+void MainWindow::onNewChat(const QString &barejid, const QString &message) {
+    if (chat_register.contains(barejid))
+        return;
+
+    if (message.length() == 0)
+        chat_register.insert(barejid, {});
+    else
+        chat_register.insert(barejid, {worker->getCurrentJID() + ":\n" + message});
+
+    ui->chat_list->addItem(barejid);
+
+}
+
 void MainWindow::onChatList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
     currentChat = current->text().split(u'\n').at(0);
     ui->chat_label->setText(currentChat);
@@ -93,8 +108,19 @@ void MainWindow::onChatList_currentItemChanged(QListWidgetItem *current, QListWi
 }
 
 void MainWindow::onAddContact_clicked() {
-    AddContact add_contact = AddContact(worker, this);
-    add_contact.exec();
+    add_contact = new AddContact(worker, this);
+    add_contact->exec();
+    delete add_contact;
+    add_chat = nullptr;
+}
+
+void MainWindow::onAddChat_clicked() {
+    add_chat = new AddChat(worker, this);
+    connect(add_chat, &AddChat::newChat, this, &MainWindow::onNewChat);
+    add_chat->exec();
+    disconnect(add_chat, &AddChat::newChat, this, &MainWindow::onNewChat);
+    delete add_chat;
+    add_chat = nullptr;
 }
 
 void MainWindow::onSendButton_clicked() {

@@ -9,6 +9,8 @@
 #include <QThread>
 
 #include "xmppworker.h"
+#include "addcontact.h"
+#include "addchat.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,6 +27,9 @@ private:
     XMPPWorker *worker;
     QThread *client_thread;
 
+    AddContact *add_contact;
+    AddChat *add_chat;
+
     QMap<QString, QListWidgetItem*> contact_map;
 
 public:
@@ -36,8 +41,10 @@ public slots:
     void onRosterReceived(const QStringList &barejids);
     void onRosterItemAdded(const QString &barejid);
     void onPresenceChanged(const QString &barejid, const QString &presence);
+    void onNewChat(const QString &barejid, const QString &message = "");
     void onChatList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void onAddContact_clicked();
+    void onAddChat_clicked();
     void onSendButton_clicked();
 
 signals:
