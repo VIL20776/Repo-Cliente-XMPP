@@ -6,164 +6,199 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1029</width>
-    <height>595</height>
+    <width>1063</width>
+    <height>726</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>0</y>
-      <width>16</width>
-      <height>541</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Orientation::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="add_chat">
+   <widget class="QLabel" name="jid">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>510</y>
-      <width>141</width>
-      <height>26</height>
+      <y>10</y>
+      <width>1011</width>
+      <height>18</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Iniciar conversación</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="chat_label">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>20</y>
-      <width>481</width>
-      <height>20</height>
-     </rect>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string/>
     </property>
-    <property name="wordWrap">
-     <bool>false</bool>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QSplitter" name="splitter_3">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>20</y>
-      <width>221</width>
-      <height>481</height>
+      <x>10</x>
+      <y>80</y>
+      <width>1041</width>
+      <height>571</height>
      </rect>
     </property>
-    <property name="orientation">
-     <enum>Qt::Orientation::Vertical</enum>
-    </property>
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Contactos</string>
-     </property>
-    </widget>
-    <widget class="QListWidget" name="contact_list">
-     <property name="maximumSize">
-      <size>
-       <width>256</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSplitter" name="splitter">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Chats</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="chat_list">
+        <property name="maximumSize">
+         <size>
+          <width>256</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="add_chat">
+        <property name="text">
+         <string>Iniciar conversación</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="add_chat_group">
+        <property name="text">
+         <string>Unirse a un grupo</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSplitter" name="splitter_4">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <widget class="QLabel" name="chat_label">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="message_list"/>
+       <widget class="QSplitter" name="splitter_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <widget class="QLineEdit" name="msg_input">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>Enviar mensaje</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="send">
+         <property name="text">
+          <string>Enviar</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSplitter" name="splitter_3">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Contactos</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="contact_list">
+        <property name="maximumSize">
+         <size>
+          <width>256</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="add_contact">
+        <property name="text">
+         <string>Agregar contacto</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="Line" name="line_2">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>0</y>
-      <width>16</width>
-      <height>541</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Orientation::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="add_contact">
-    <property name="geometry">
-     <rect>
-      <x>780</x>
-      <y>510</y>
-      <width>141</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Agregar contacto</string>
-    </property>
-   </widget>
-   <widget class="QSplitter" name="splitter">
+   <widget class="QSplitter" name="splitter_5">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
-      <width>221</width>
-      <height>481</height>
+      <y>40</y>
+      <width>1031</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Orientation::Vertical</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Chats</string>
+      <string>Mensaje de presencia: </string>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-    <widget class="QListWidget" name="chat_list">
+    <widget class="QLineEdit" name="presence_message">
      <property name="maximumSize">
       <size>
-       <width>256</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
-    </widget>
-   </widget>
-   <widget class="QSplitter" name="chat_segment">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>50</y>
-      <width>481</width>
-      <height>481</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Orientation::Vertical</enum>
-    </property>
-    <widget class="QListWidget" name="message_list"/>
-    <widget class="QSplitter" name="splitter_2">
-     <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+     <property name="placeholderText">
+      <string>Escribe un mensaje de presencia</string>
      </property>
-     <widget class="QLineEdit" name="msg_input">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="placeholderText">
-       <string>Enviar mensaje</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="send">
-      <property name="text">
-       <string>Enviar</string>
-      </property>
-     </widget>
+    </widget>
+    <widget class="QComboBox" name="pressence_status">
+     <property name="editable">
+      <bool>false</bool>
+     </property>
+     <property name="currentIndex">
+      <number>-1</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="update_presence">
+     <property name="text">
+      <string>Actualizar</string>
+     </property>
     </widget>
    </widget>
   </widget>
@@ -172,7 +207,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1029</width>
+     <width>1063</width>
      <height>23</height>
     </rect>
    </property>
