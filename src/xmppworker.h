@@ -8,12 +8,8 @@ class XMPPWorker : public QObject
 {
     Q_OBJECT
 
-    struct ContactInfo {
-        QString availableStatus;
-        QString status;
-    };
-
 private:
+    QString client_barejid;
     QXmppClient *client;
     QXmppRosterManager *roster_manager;
     
@@ -22,18 +18,22 @@ public:
     void connectToServer();
 
     void handleSendMessage(const QString &message, const QString &to);
+    void subscribe(const QString &to);
     QString getCurrentJID();
     QString getPresence(const QString &barejid, const QString &resource);
 
 public slots:
     void handleMessageReceived(const QXmppMessage &message);
     void handlePresenceChanged(const QString &barejid, const QString &resource);
+
     void handleRosterReceived();
+    void handleRosterItemAdded(const QString &barejid);
 
 signals:
     void messageReceived(const QString &from, const QString &message);
     void rosterReceived(const QStringList &barejids);
     void presenceChanged(const QString &barejid, const QString &presence);
+    void rosterItemAdded(const QString &barejid);
 
 };
 
