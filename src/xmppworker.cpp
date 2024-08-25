@@ -14,14 +14,16 @@ XMPPWorker::XMPPWorker(QObject *parent):
 
     connect(client, &QXmppClient::messageReceived, this, &XMPPWorker::handleMessageReceived);
     connect(roster_manager, &QXmppRosterManager::rosterReceived, this, &XMPPWorker::handleRosterReceived);
+    connect(roster_manager, &QXmppRosterManager::itemAdded, this, &XMPPWorker::handleRosterItemAdded);
     connect(roster_manager, &QXmppRosterManager::presenceChanged, this, &XMPPWorker::handlePresenceChanged);
 }
 
 void XMPPWorker::connectToServer() {
     client->logger()->setLoggingType(QXmppLogger::StdoutLogging);
 
+    client_barejid = "vil20776-test2@alumchat.lol";
     QXmppConfiguration config {};
-    config.setJid("vil20776-test2@alumchat.lol");
+    config.setJid(client_barejid);
     config.setPassword("Pipupo10182001");
     config.setIgnoreSslErrors(true);
 
@@ -30,6 +32,10 @@ void XMPPWorker::connectToServer() {
 
 void XMPPWorker::handleSendMessage(const QString &message, const QString &to) {
     client->sendPacket(QXmppMessage("", to, message));
+}
+
+void XMPPWorker::subscribe(const QString &to) {
+    roster_manager->subscribe(to);
 }
 
 QString XMPPWorker::getPresence(const QString &barejid, const QString &resource) {
@@ -67,7 +73,7 @@ QString XMPPWorker::getPresence(const QString &barejid, const QString &resource)
 }
 
 QString XMPPWorker::getCurrentJID() {
-    return client->configuration().jidBare();
+    return client_barejid;
 }
 
 void XMPPWorker::handleMessageReceived(const QXmppMessage &message) {
@@ -100,4 +106,8 @@ void XMPPWorker::handleRosterReceived() {
     
     emit rosterReceived(jids);
 
+}
+
+void XMPPWorker::handleRosterItemAdded(const QString &barejid) {
+    emit rosterItemAdded(barejid);
 }
