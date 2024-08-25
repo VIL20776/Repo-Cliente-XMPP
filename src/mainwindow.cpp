@@ -17,6 +17,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this); 
 
+    ui->pressence_status->addItems({
+        "Online", 
+        "Ausente", 
+        "No disponible", 
+        "Ocupado"
+    });
+    ui->pressence_status->setCurrentIndex(0);
+
     worker = new XMPPWorker();
     client_thread = new QThread(this);
     worker->moveToThread(client_thread);
@@ -32,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->send, &QPushButton::clicked, this, &MainWindow::onSendButton_clicked);
     connect(ui->add_contact, &QPushButton::clicked, this, &MainWindow::onAddContact_clicked);
     connect(ui->add_chat, &QPushButton::clicked, this, &MainWindow::onAddChat_clicked);
+    connect(ui->update_presence, &QPushButton::clicked, this, &MainWindow::onUpdatePresece_clicked);
 
 
     connect(client_thread, &QThread::finished, worker, &XMPPWorker::deleteLater);
@@ -138,4 +147,11 @@ void MainWindow::onSendButton_clicked() {
     ui->msg_input->setText("");
     
     worker->handleSendMessage(message, currentChat);
+}
+
+void MainWindow::onUpdatePresece_clicked() {
+    worker->setPresence(
+        ui->pressence_status->currentIndex(),
+        ui->presence_message->text()
+    );
 }

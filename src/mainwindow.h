@@ -43,6 +43,7 @@ public slots:
     void onPresenceChanged(const QString &barejid, const QString &presence);
     void onNewChat(const QString &barejid, const QString &message = "");
     void onChatList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void onUpdatePresece_clicked();
     void onAddContact_clicked();
     void onAddChat_clicked();
     void onSendButton_clicked();
