@@ -25,6 +25,9 @@ MainWindow::MainWindow(QWidget *parent)
     });
     ui->pressence_status->setCurrentIndex(0);
 
+    add_chat = nullptr;
+    add_contact = nullptr;
+
     worker = new XMPPWorker();
     client_thread = new QThread(this);
     worker->moveToThread(client_thread);
