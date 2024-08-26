@@ -14,8 +14,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow.h
+        src/mainwindow.cpp src/mainwindow.h
+        src/xmppworker.h src/xmppworker.cpp
+        src/addcontact.h src/addcontact.cpp
+        src/addchat.h src/addchat.cpp
         ui/mainwindow.ui
         ui/addcontact_dialog.ui
         ui/addchat_dialog.ui
@@ -27,9 +29,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QJab
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        src/xmppworker.h src/xmppworker.cpp
-        src/addcontact.h src/addcontact.cpp
-        src/addchat.h src/addchat.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET QJab APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -59,7 +58,7 @@ if(EXISTS ${EXTERNAL_DIR})
     set(QXmpp_INCLUDE ${EXTERNAL_DIR}/qxmpp-${QXmpp_VERSION}/build/include/QXmppQt6)
 endif()
 
-find_package(QXmpp ${QXmpp_VERSION} REQUIRED NAMES QXmpp QXmppQt6)
+find_package(QXmpp REQUIRED NAMES QXmpp QXmppQt6)
 
 target_link_libraries(QJab PRIVATE Qt${QT_VERSION_MAJOR}::Widgets QXmpp::QXmpp)
 if(DEFINED ${QXmpp_INCLUDE})
