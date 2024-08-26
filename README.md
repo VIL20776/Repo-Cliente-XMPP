@@ -3,10 +3,14 @@ Implementación de un cliente XMPP para el curso de Redes.
 
 La implementación se realizó con C++ haciendo uso de las librerías Qt y QXmpp para implementar la lógica y la interfaz gráfica.
 
+Se recomienda un entorno UNIX/Linux para compilar.
+
 ## Dependencias y herramientas
 - QXmpp 1.8.0 (Librería XMPP)
 - Qt 6.7 (Dependencia de QXmpp, también usada para la interfaz gráfica)
 - Cmake (Build-system para C++, necesario para integrar los archivos .ui)
+
+QXmpp puede ser agregado manualmente al proyecto. Crea una carpeta `external` y dentro de ella copia o clona el código fuente. Y a continuación, compila e install el proyecto con cmake según las instrucciones del README. Si se hace de esta forma pasa el argumento `-DCMAKE_INSTALL_PREFIX=build` para que pueda ser encontrado por la configuración del proyecto. Es recomendable pasar el argumento `QT_MAJOR_VERSION=6` para evitar instalar Qt5 como dependencia adicional.
 
 ## Funciones implementadas
 - Mostrar usuarios/contactos y su estado
