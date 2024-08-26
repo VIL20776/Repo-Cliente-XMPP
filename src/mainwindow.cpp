@@ -33,19 +33,19 @@ MainWindow::MainWindow(QWidget *parent)
     worker->moveToThread(client_thread);
 
     connect(this, &MainWindow::startXMPPClient, worker, &XMPPWorker::connectToServer);
-
+    // Worker signals
     connect(worker, &XMPPWorker::messageReceived, this, &MainWindow::onMessageReceived);
     connect(worker, &XMPPWorker::rosterReceived, this, &MainWindow::onRosterReceived);
     connect(worker, &XMPPWorker::rosterItemAdded, this, &MainWindow::onRosterItemAdded);
     connect(worker, &XMPPWorker::presenceChanged, this, &MainWindow::onPresenceChanged);
-
+    // Ui signals
     connect(ui->chat_list, &QListWidget::currentItemChanged, this, &MainWindow::onChatList_currentItemChanged);
     connect(ui->send, &QPushButton::clicked, this, &MainWindow::onSendButton_clicked);
     connect(ui->add_contact, &QPushButton::clicked, this, &MainWindow::onAddContact_clicked);
     connect(ui->add_chat, &QPushButton::clicked, this, &MainWindow::onAddChat_clicked);
     connect(ui->update_presence, &QPushButton::clicked, this, &MainWindow::onUpdatePresece_clicked);
 
-
+    // Thread signals
     connect(client_thread, &QThread::finished, worker, &XMPPWorker::deleteLater);
     connect(client_thread, &QThread::finished, client_thread, &QThread::deleteLater);
 
