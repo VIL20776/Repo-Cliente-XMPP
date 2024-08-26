@@ -18,6 +18,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+// Ventana principal de la aplicación
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,6 +27,8 @@ private:
     Ui::MainWindow *ui;
     XMPPWorker *worker;
     QThread *client_thread;
+
+    // Ventanas auxiliares
 
     AddContact *add_contact;
     AddChat *add_chat;
@@ -36,7 +39,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
+public slots: //Slots para manejar acciones del usuario y señales del cliente 
+
     void onMessageReceived(const QString &from, const QString &message);
     void onRosterReceived(const QStringList &barejids);
     void onRosterItemAdded(const QString &barejid);
@@ -48,7 +52,7 @@ public slots:
     void onAddChat_clicked();
     void onSendButton_clicked();
 
-signals:
+signals: //Señales emitidas por la interfaz gráfica
     void startXMPPClient();
 
 };
