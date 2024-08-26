@@ -12,7 +12,9 @@ AddChat::AddChat(XMPPWorker *worker, QWidget *parent) :
     connect(ui->start_chat, &QPushButton::clicked, this, &AddChat::onStartChat_clicked);
 }
 
-AddChat::~AddChat() = default;
+AddChat::~AddChat() {
+    delete ui;
+}
 
 void AddChat::onStartChat_clicked() {
     QString jid = ui->jid_input->text();

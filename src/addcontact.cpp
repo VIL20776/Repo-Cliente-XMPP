@@ -13,7 +13,7 @@ AddContact::AddContact(XMPPWorker *worker, QWidget *parent):
 
 AddContact::~AddContact()
 {
-
+    delete ui;
 }
 
 void AddContact::onSubscribe_clicked() {
