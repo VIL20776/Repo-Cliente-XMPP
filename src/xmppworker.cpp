@@ -19,13 +19,13 @@ XMPPWorker::XMPPWorker(QObject *parent):
     connect(roster_manager, &QXmppRosterManager::presenceChanged, this, &XMPPWorker::handlePresenceChanged);
 }
 
-void XMPPWorker::connectToServer() {
+void XMPPWorker::connectToServer(QString jid, QString password) {
     client->logger()->setLoggingType(QXmppLogger::StdoutLogging);
 
-    client_barejid = "vil20776-test2@alumchat.lol";
+    client_barejid = jid;
     QXmppConfiguration config {};
     config.setJid(client_barejid);
-    config.setPassword("Pipupo10182001");
+    config.setPassword(password);
     config.setIgnoreSslErrors(true);
 
     client->connectToServer(config);

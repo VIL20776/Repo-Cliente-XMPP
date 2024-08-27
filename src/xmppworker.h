@@ -16,7 +16,7 @@ private:
     
 public:
     XMPPWorker(QObject *parent = nullptr);
-    void connectToServer();
+    void connectToServer(QString jid, QString password);
 
     /*Recibe un mensaje del cliente y lo envía al servidor*/
     void handleSendMessage(const QString &message, const QString &to);

@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "xmppworker.h"
-#include "addcontact.h"
-
 #include "QXmppLogger.h"
 
 #include <QDebug>
@@ -27,12 +24,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     add_chat = nullptr;
     add_contact = nullptr;
+    signon = new SignOn(this);
 
     worker = new XMPPWorker();
     client_thread = new QThread(this);
     worker->moveToThread(client_thread);
 
-    connect(this, &MainWindow::startXMPPClient, worker, &XMPPWorker::connectToServer);
+    connect(signon, &SignOn::startXMPPClient, worker, &XMPPWorker::connectToServer);
+    signon->exec();
+    disconnect(signon, &SignOn::startXMPPClient, worker, &XMPPWorker::connectToServer);
+    delete signon;
+
     // Worker signals
     connect(worker, &XMPPWorker::messageReceived, this, &MainWindow::onMessageReceived);
     connect(worker, &XMPPWorker::rosterReceived, this, &MainWindow::onRosterReceived);
@@ -50,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(client_thread, &QThread::finished, client_thread, &QThread::deleteLater);
 
     client_thread->start();
-    emit startXMPPClient();
 }
 
 MainWindow::~MainWindow()

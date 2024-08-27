@@ -11,6 +11,7 @@
 #include "xmppworker.h"
 #include "addcontact.h"
 #include "addchat.h"
+#include "signon.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -32,6 +33,7 @@ private:
 
     AddContact *add_contact;
     AddChat *add_chat;
+    SignOn *signon;
 
     QMap<QString, QListWidgetItem*> contact_map;
 
@@ -51,9 +53,6 @@ public slots: //Slots para manejar acciones del usuario y señales del cliente
     void onAddContact_clicked();
     void onAddChat_clicked();
     void onSendButton_clicked();
-
-signals: //Señales emitidas por la interfaz gráfica
-    void startXMPPClient();
 
 };
 #endif // MAINWINDOW_H
